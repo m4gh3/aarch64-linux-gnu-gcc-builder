@@ -1,2 +1,2 @@
 #!/bin/bash
-aarch64-linux-gnu-g++ -I/usr/include -I/usr/include/c++/12 $@ || g++-12 $@
+/usr/bin/aarch64-linux-gnu-g++ -I/usr/include -I/usr/include/c++/12 $@ || g++-12 $@

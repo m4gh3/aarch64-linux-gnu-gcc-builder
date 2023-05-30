@@ -1,0 +1,33 @@
+name: Build_QEMU_CI_CD
+run-name: ${{ github.actor }} is building QEMU_CI_CD for linux using GitHub Actions 🚀
+on:
+  release:
+    types: [created]
+jobs:
+  Build_aarch64_linux_gnu_gcc_builder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install build deps
+        run: |
+          sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+          sudo apt update
+          yes | sudo apt build-dep gcc
+          yes | sudo apt install git podman wget
+      - name: podman login
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          podman login docker.io -u=m4gh3 -p=$DOCKERHUB_TOKEN
+      - name: build docker image
+        run: |
+          ./build_container_image.sh
+          podman tag localhost/cross_builder_aarch64:latest m4gh3/aarch64-linux-gnu-gcc-builder:latest
+      - name: push container image to DOCKERHUB
+        run: |
+          podman push m4gh3/aarch64-linux-gnu-gcc-builder:latest
+      - name: podman logout
+        run: |
+          podman logout docker.io
+      - run: echo "🍏 This job's status is ${{ job.status }}."

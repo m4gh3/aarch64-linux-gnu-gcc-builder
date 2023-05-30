@@ -1,2 +1,2 @@
 #!/bin/bash
-aarch64-linux-gnu-gcc -I/usr/include $@ || gcc-12 $@
+/usr/bin/aarch64-linux-gnu-gcc -I/usr/include $@ || gcc-12 $@
