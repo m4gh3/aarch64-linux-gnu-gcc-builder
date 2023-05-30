@@ -18,4 +18,4 @@ cd install
 tar cf ../install.tar .
 cd ..
 
-podman build --arch aarch64 -t cross_builder_aarch64 .
+podman build --arch arm64 -t cross_builder_aarch64 .

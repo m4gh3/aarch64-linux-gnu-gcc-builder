@@ -9,3 +9,4 @@ COPY gcc_wrap /usr/bin/gcc
 COPY g++_wrap /usr/bin/g++
 COPY aarch64-linux-gnu-gcc /usr/bin/aarch64-linux-gnu-gcc
 COPY aarch64-linux-gnu-g++ /usr/bin/aarch64-linux-gnu-g++
+RUN [ "/usr/bin/qemu-aarch64-static", "/bin/sh.real", "-c", "mv /bin/sh.real /bin/sh" ]
